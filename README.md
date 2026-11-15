@@ -68,7 +68,7 @@ The application loads configuration in layers:
      }
    }
    ```
-   > **Note for Gmail users**: Google requires an **App Password** for third-party SMTP connections. Generate one under **Google Account -> Security -> 2-Step Verification -> App passwords**.
+   > **Note for Gmail users**: Google requires an **App Password** for third-party SMTP connections. Go to **Google Account -> Security -> 2-Step Verification** and enable 2-Step Verification; the option to generate app passwaords will then be available in the 2-Step Verification page.
 
 ---
 
@@ -81,8 +81,9 @@ Run these commands from the repository root. Press Ctrl+C to stop the monitor.
 **Run the monitor:**
 ```bash
 dotnet run --project StockPriceAlert -- <SYMBOL> <SELL_TARGET> <BUY_TARGET>
-
-# Example:
+```
+Example:
+```bash
 dotnet run --project StockPriceAlert -- PETR4 22.67 22.59
 ```
 
@@ -106,11 +107,21 @@ docker compose build
 
 **2. Run with your local configuration file:**
 ```bash
-docker compose run --rm stock-alert <SYMBOL> <SELL_TARGET> <BUY_TARGET>
-
-# Example
-docker compose run --rm stock-alert PETR4 22.67 22.59
+docker compose run --name stock-alert-run stock-alert <SYMBOL> <SELL_TARGET> <BUY_TARGET>
 ```
+Example:
+```bash
+docker compose run --name stock-alert-run stock-alert PETR4 22.67 22.59
+```
+
+The monitor's output appears in the terminal where you run the command. To follow it from another terminal, or inspect recent output, use:
+```bash
+docker logs --tail 100 --follow stock-alert-run
+```
+The named container is kept after it stops so its logs remain available. Stop the monitor with Ctrl+C in the run terminal or `docker stop stock-alert-run`, then remove the stopped container when you no longer need it with `docker rm stock-alert-run`.
+
+The logs include the startup summary (symbol, thresholds, and polling interval), each successfully retrieved quote and its evaluation, and shutdown messages. They also report quote/API and email delivery errors, when they occur, and whether an alert email was sent or a duplicate was skipped. Quote lines show the time and prices; email success messages include the recipient address. With `docker compose run --rm`, output is still streamed to the run terminal, but the container is removed when it exits, so its logs are not available afterward.
+
 ---
 
 ## Next Steps
@@ -204,7 +215,7 @@ O aplicativo carrega as configurações em camadas:
      }
    }
    ```
-   > **Observação para usuários do Gmail**: o Google exige uma **senha de app** para conexões SMTP de terceiros. Gere uma em **Conta do Google -> Segurança -> Verificação em duas etapas -> Senhas de app**.
+   > **Observação para usuários do Gmail**: o Google exige uma **senha de app** para conexões SMTP de terceiros. Acesse **Conta do Google -> Segurança -> Verificação em duas etapas** e ative a verificação em duas etapas; a opção para gerar senhas de app ficará disponível na página da Verificação em duas etapas.
 
 ---
 
@@ -217,8 +228,9 @@ Execute estes comandos na raiz do repositório. Pressione Ctrl+C para parar o mo
 **Executar o monitor:**
 ```bash
 dotnet run --project StockPriceAlert -- <ATIVO> <PRECO_VENDA> <PRECO_COMPRA>
-
-# Exemplo:
+```
+Exemplo:
+```bash
 dotnet run --project StockPriceAlert -- PETR4 22.67 22.59
 ```
 
@@ -242,11 +254,20 @@ docker compose build
 
 **2. Executar com seu arquivo de configurações locais:**
 ```bash
-docker compose run --rm stock-alert <ATIVO> <PRECO_VENDA> <PRECO_COMPRA>
-
-# Exemplo
-docker compose run --rm stock-alert PETR4 22.67 22.59
+docker compose run --name stock-alert-run stock-alert <ATIVO> <PRECO_VENDA> <PRECO_COMPRA>
 ```
+Exemplo:
+```bash
+docker compose run --name stock-alert-run stock-alert PETR4 22.67 22.59
+```
+
+As mensagens do monitor aparecem no terminal em que o comando foi executado. Para acompanhá-las em outro terminal ou consultar as mensagens recentes, use:
+```bash
+docker logs --tail 100 --follow stock-alert-run
+```
+O contêiner nomeado é mantido após o encerramento para que os logs continuem disponíveis. Pare o monitor com Ctrl+C no terminal de execução ou com `docker stop stock-alert-run`; quando não precisar mais dele, remova o contêiner parado com `docker rm stock-alert-run`.
+
+Os logs incluem o resumo de inicialização (ativo, limites e intervalo de consulta), cada cotação obtida com sucesso e sua avaliação, além das mensagens de encerramento. Também informam erros na consulta da cotação/API e no envio de e-mails, quando ocorrerem, e se um alerta foi enviado ou um e-mail duplicado foi ignorado. As linhas de cotação mostram horário e preços; as mensagens de envio bem-sucedido incluem o endereço do destinatário. Com `docker compose run --rm`, a saída também é exibida no terminal, mas o contêiner é removido ao terminar e seus logs não ficam disponíveis depois.
 
 ---
 
