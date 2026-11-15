@@ -89,5 +89,5 @@ catch (OperationCanceledException)
     // Exit when Ctrl+C is triggered
 }
 
-Console.WriteLine("Stock monitor stopped. Goodbye!");
+Console.WriteLine("\nStock monitor stopped. Goodbye!");
 return 0;
