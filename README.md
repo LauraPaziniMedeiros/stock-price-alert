@@ -111,6 +111,26 @@ docker compose run --rm stock-alert <SYMBOL> <SELL_TARGET> <BUY_TARGET>
 # Example
 docker compose run --rm stock-alert PETR4 22.67 22.59
 ```
+---
+
+## Next Steps
+
+The project already covers the core MVP, and the next enhancements are focused on extensibility and scalability:
+
+- **Add `StockServiceFactory` for provider switching**: keep the stock-fetching implementation pluggable through `appsettings.json`, so the app can switch providers without changing `Program.cs` or recompiling the project.
+- **Support multi-currency and global exchanges**: extend `StockQuote` and the monitoring logic to handle values such as USD/EUR and listings from international exchanges while formatting prices appropriately for the active market.
+- **Add a Yahoo Finance provider**: implement a second stock service provider and register it in the factory to demonstrate true provider abstraction and easier future integrations.
+
+---
+
+## AI use
+
+This project used AI as a practical implementation accelerator for architecture, documentation and validation work:
+
+- AI-assisted planning helped refine the initial C# project layout and and Docker-based production approach.
+- AI was used for documentation, such as the README and project notes.
+- AI helped elaborate unit testing with `StockPriceAlert.Tests`.
+- AI supported code review and refinement by improving clarity, consistency, and early validation of implementation decisions.
 
 ---
 
@@ -229,3 +249,25 @@ docker compose run --rm stock-alert PETR4 22.67 22.59
 ```
 
 ---
+
+## Próximos Passos
+
+O projeto já cobre o MVP principal, e as próximas melhorias têm como foco a extensibilidade e a escalabilidade:
+
+- **Adicionar um provedor do Yahoo Finance**: implementar um segundo provedor de serviços de ações e registrá-lo na factory para demonstrar uma abstração real de provedores e facilitar integrações futuras.
+
+- **Adicionar `StockServiceFactory` para alternância de provedores**: manter a implementação de busca de ações plugável por meio do appsettings.json, permitindo que a aplicação alterne entre provedores sem precisar alterar o Program.cs ou recompilar o projeto.
+
+- **Suportar múltiplas moedas e bolsas globais**: estender `StockQuote` e a lógica de monitoramento para lidar com valores como USD/EUR e listagens de bolsas internacionais, formatando os preços adequadamente para o mercado ativo.
+
+## Uso de IA
+
+Este projeto utilizou IA como um acelerador prático de implementação para arquitetura, documentação e validação:
+
+- O planejamento assistido por IA ajudou a refinar a estrutura inicial do projeto em C# e a abordagem de produção baseada em Docker.
+
+- A IA foi utilizada para a documentação, como o README e as notas do projeto.
+
+- A IA auxiliou na elaboração de testes unitários com o `StockPriceAlert.Tests`.
+
+- A IA apoiou a revisão e o refinamento de código, melhorando a clareza, a consistência e a validação antecipada das decisões de implementação.
